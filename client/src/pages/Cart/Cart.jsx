@@ -20,6 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import Grow from '@material-ui/core/Grow';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 //For Toast
 function GrowTransition(props) {
@@ -146,10 +147,18 @@ const Cart = () => {
       await axios.post('/api/order', {
         cart: cart._id,
         user: '607b2ccd2185a8437004490d',
-        total: total
+        total: total,
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  function GoToCheckout() {
+    let history = useHistory();
+
+    const redirect = () => {
+      history.push('./CheckOut');
     }
   };
 
@@ -254,7 +263,11 @@ const Cart = () => {
                 size='large'
                 color='primary'
                 variant='contained'
-                onClick={submitOrder}
+                onClick={() => {
+                  submitOrder();
+                  GoToCheckout();
+                }}
+                onSubmit={redirect}
                 fullWidth>
                 Checkout
               </Button>
