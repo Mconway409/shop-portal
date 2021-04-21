@@ -27,57 +27,57 @@ const Shop = () => {
     500: 1,
   };
   const [productsList, setProductsList] = useState([]);
-  
+
   // Get products from the store
   const getProduct = () => {
     axios
       .get('/api/product')
       .then((res) => {
-            setProductsList(res.data);
-          })
+        setProductsList(res.data);
+      })
       // eslint-disable-next-line
       .catch((err) => console.log(err));
   };
 
-// Rendering
-  useEffect(() => {    
+  // Rendering
+  useEffect(() => {
     getProduct();
   }, []);
 
-// Add the product to existing cart or create new cart
-const addProduct = (productId, price) => {
-  const status = 'Not processed';
-  const newCart = {
-    user: userId,
-    products: [
-      {
-        product: productId,
-        quantity: 1,
-        totalPrice: price,
-      },
-    ],
-  };
-  axios
-    .get(`/api/cart/${userId}/${status}`)
-    .then((res) => {
-      if (res.data[0]) {
-        const cartId = res.data[0]._id;
-        const cart = res.data[0];
-        // FUTURE : Check if product already in the cart
-        cart.products.push({
+  // Add the product to existing cart or create new cart
+  const addProduct = (productId, price) => {
+    const status = 'Not processed';
+    const newCart = {
+      user: userId,
+      products: [
+        {
           product: productId,
           quantity: 1,
           totalPrice: price,
-        });
-        axios
-          .put(`/api/cart/${cartId}`, cart)
-          .catch((error) => console.log(error));
-      } else {
-        axios.post('/api/cart', newCart).catch((error) => console.log(error));
-      }
-    })
-    .catch((error) => console.log(error));
-};
+        },
+      ],
+    };
+    axios
+      .get(`/api/cart/${userId}/${status}`)
+      .then((res) => {
+        if (res.data[0]) {
+          const cartId = res.data[0]._id;
+          const cart = res.data[0];
+          // FUTURE : Check if product already in the cart
+          cart.products.push({
+            product: productId,
+            quantity: 1,
+            totalPrice: price,
+          });
+          axios
+            .put(`/api/cart/${cartId}`, cart)
+            .catch((error) => console.log(error));
+        } else {
+          axios.post('/api/cart', newCart).catch((error) => console.log(error));
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Masonry
@@ -86,13 +86,13 @@ const addProduct = (productId, price) => {
       columnClassName={classes.myMasonryGridColumn}>
       {productsList
         ? productsList.map((product, i) => {
-          let price='$'+product.price;   // Add dollar sign to displayed price
+            let price = '$' + product.price; // Add dollar sign to displayed price
             return (
               <div key={i} className={classes.myMasonryGridColumnDiv}>
                 <Card>
                   <CardHeader title={product.name} subheader={price} />
                   <CardMedia
-                    style={{ height: '200px' }}
+                    className={classes.image}
                     image={product.imageUrl}
                   />
                   <CardContent>
@@ -101,25 +101,27 @@ const addProduct = (productId, price) => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                  <Link to='/Cart'>
-                    <Button size='small'
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      addProduct(product._id, product.price);
-                    }}>
-                      ADD TO CART
+                    <Link style={{ textDecoration: 'none' }} to='/Cart'>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        color='primary'
+                        onClick={() => {
+                          addProduct(product._id, product.price);
+                        }}>
+                        ADD TO CART
                       </Button>
-                      </Link>
-                    <Link to='/itemDetails'>
-                    <Button size='small'
-                    variant='contained'
-                    color='primary'
-                      onClick={() => { 
-                        // Temp fix until login page and global state
-                        console.log(product._id);                        
-                      }}>
-                      DETAILS
+                    </Link>
+                    <Link style={{ textDecoration: 'none' }} to='/itemDetails'>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        color='primary'
+                        onClick={() => {
+                          // Temp fix until login page and global state
+                          console.log(product._id);
+                        }}>
+                        DETAILS
                       </Button>
                     </Link>
                   </CardActions>

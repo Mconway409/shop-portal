@@ -24,7 +24,7 @@ import ReviewModal from '../../components/ReviewModal/ReviewModal';
 import useStyles from './styles';
 
 // ***********To replace with local id************
-const productID = '607f0a715d981599c05cca79';
+const productID = '607f4342b230e5b53889f39c';
 const userId = '607f092b7624a358d481c973';
 //********************************************* */
 const ItemDetailsPage = () => {
@@ -134,7 +134,7 @@ const ItemDetailsPage = () => {
             <Typography variant='h6'>${product.price}</Typography>
           </Box>
           <Box className={classes.box}>
-            <Link to='/Cart'>
+            <Link style={{ textDecoration: 'none' }} to='/Cart'>
               <Button
                 type='submit'
                 variant='contained'
@@ -148,10 +148,7 @@ const ItemDetailsPage = () => {
             </Link>
           </Box>
           <Box className={classes.box}>
-            <ReviewModal
-              userId={userId}
-              productId={product._id}
-            />
+            <ReviewModal userId={userId} productId={product._id} />
           </Box>
         </CardActions>
 

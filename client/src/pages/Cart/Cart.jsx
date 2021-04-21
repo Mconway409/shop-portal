@@ -258,7 +258,7 @@ const Cart = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to='/Checkout'>
+              <Link style={{ textDecoration: 'none' }} to='/Checkout'>
                 <Button
                   size='large'
                   color='primary'
