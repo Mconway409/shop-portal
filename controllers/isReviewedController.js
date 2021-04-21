@@ -22,8 +22,10 @@ module.exports = {
   create: function (req, res) {
     let createReview = new db({
       name: req.body.name,
+      product: req.body.product,
       imageUrl: req.body.imageUrl,
       imageKey: req.body.imageKey,
+      title: req.body.title,
       description: req.body.description,
       totalStars: req.body.totalStars,
       reviewBody: req.body.reviewBody,
@@ -32,7 +34,6 @@ module.exports = {
       created: req.body.created,
       updated: req.body.updated,
     });
-
     db.create(createReview)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));

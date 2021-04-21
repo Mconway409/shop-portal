@@ -18,11 +18,19 @@ module.exports = {
           foreignField: '_id',
           as: 'reviews',
         },
-      },
+      },     
       {
         $unwind: {
           path: '$reviews',
           preserveNullAndEmptyArrays: true,
+        },        
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'reviews.name',
+          foreignField: '_id',
+          as: 'reviews.users',
         },
       },
       {
@@ -41,16 +49,27 @@ module.exports = {
           brand: { $first: '$brand' },
           isActive: { $first: '$isActive' },
           reviews: {
-            $push: {
-              name: '$reviews.name',
-              title: '$reviews.title',
-              totalStars: '$reviews.totalStars',
-              description: '$reviews.description',
-              isActive: '$reviews.isActive',
-              created: '$reviews.created',
-            },
+            $push: '$reviews'
           },
         },
+      },
+      {
+        $project: {
+          _id: 1,
+          averageStars: 1,
+          sku: 1,
+          slug: 1,
+          name: 1,
+          imageUrl: 1,
+          imageKey: 1,
+          description: 1,
+          price:1,
+          brand:1,
+          isActive: 1,
+          reviews: {
+             $filter: { input: "$reviews", as: "a", cond: { $ifNull: ["$$a._id", false] } },
+           } 
+        }
       },
     ])
       .then((dbModel) => res.json(dbModel))

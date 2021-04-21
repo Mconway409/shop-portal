@@ -31,11 +31,6 @@ const CartSchema = new Schema({
     default: 'Not processed',
     enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
   },
-  status: {
-    type: String,
-    default: 'Not processed',
-    enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
-  },
   updated: Date,
   created: {
     type: Date,
