@@ -1,6 +1,6 @@
-const db = require('../models/userModel');
+const db = require('../models/merchantModel');
 
-// Defining methods for the postsController users
+// Defining methods for the postsController merchant
 module.exports = {
   findAll: function (req, res) {
     db.find(req.query)
@@ -18,40 +18,24 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  findByUsername: function (req, res) {
-    db.findOne({ username: req.parmas.username })
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
-  },
-  findByLastname: function (req, res) {
-    db.findOne({ lastName: req.parmas.lastName })
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
-  },
   findByPhoneNumber: function (req, res) {
-    db.finOne({ phoneNumber: req.params.phoneNumber })
+    db.findOne({ phoneNumber: req.parmas.phoneNumber })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {
-    let createUser = new db({
-      role: req.body.role,
-      username: req.body.username,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      password: req.body.password,
+    let createMerchant = new db({
+      name: req.body.name,
       email: req.body.email,
-      provider: req.body.provider,
-      merchant: req.body.merchant,
       phoneNumber: req.body.phoneNumber,
-      googleId: req.body.googleId,
-      facebookId: req.body.facebookId,
-      resetPasswordToken: req.body.resetPasswordToken,
-      resetPasswordExpires: req.body.resetPasswordExpires,
+      description: req.body.description,
+      status: req.body.status,
+      isActive: req.body.isActive,
       created: req.body.created,
       updated: req.body.updated,
     });
-    db.create(createUser)
+
+    db.create(createMerchant)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
