@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -20,11 +21,16 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import Grow from '@material-ui/core/Grow';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 //For Toast
 function GrowTransition(props) {
   return <Grow {...props} />;
 }
+
+// ***********To replace with local id until login page and global states done************
+const user = '607f092b7624a358d481c973';
+//************************************************************************************** */
 
 const Cart = () => {
   const classes = useStyles();
@@ -41,7 +47,6 @@ const Cart = () => {
 
   // For Api call
   const getCart = () => {
-    const user = '607b2ccd2185a8437004490d'; // FOR TESTING
     const status = 'Not processed';
     axios
       .get(`/api/cart/${user}/${status}`)
@@ -51,8 +56,6 @@ const Cart = () => {
         setList(res.data[0].products); // Push each product in an array
         newTotal = grandTotal(res.data[0].products);
         setTotal(newTotal);
-        console.log('cart', cart);
-        console.log('list', list);
       })
       .catch((error) => console.log(error));
   };
@@ -140,16 +143,21 @@ const Cart = () => {
 
   const submitOrder = async () => {
     try {
-      // const results = await axios.post('/api/order', {
-      //   list,
-      // });
       await axios.post('/api/order', {
         cart: cart._id,
         user: '607b2ccd2185a8437004490d',
-        total: total
+        total: total,
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  function GoToCheckout() {
+    let history = useHistory();
+
+    const redirect = () => {
+      history.push('./CheckOut');
     }
   };
 
@@ -250,14 +258,16 @@ const Cart = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button
-                size='large'
-                color='primary'
-                variant='contained'
-                onClick={submitOrder}
-                fullWidth>
-                Checkout
-              </Button>
+              <Link style={{ textDecoration: 'none' }} to='/Checkout'>
+                <Button
+                  size='large'
+                  color='primary'
+                  variant='contained'
+                  onClick={submitOrder}
+                  fullWidth>
+                  Checkout
+                </Button>
+              </Link>
             </CardActions>
           </Card>
         </Grid>

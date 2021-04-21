@@ -17,8 +17,10 @@ const reviewSeed = [
     imageKey: 'My new hot t-shirt',
     description:`I love this shirt and wear it a lot. It's super soft and fits great. The shirt has a ladies cut, which is flattering.`,
     totalStars: 5,
+    product:'607f0a715d981599c05cca79',
     created: new Date(Date.now()),
     updated: new Date(Date.now()),
+    name: '607f092b7624a358d481c971'
   },
   {
     title: 't-shirt too big',
@@ -27,8 +29,10 @@ const reviewSeed = [
     imageKey: 't-shirt too big',
     description:`The shirt is not true to size. I ordered a size S but this is as big as a size XL.`,
     totalStars: 2,
+    product:'607f0a715d981599c05cca79',
     created: new Date(Date.now()),
     updated: new Date(Date.now()),
+    name:'607f092b7624a358d481c972'
   },
 ];
 

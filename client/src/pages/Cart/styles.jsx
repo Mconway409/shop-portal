@@ -8,8 +8,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
     checkout: {
-      marginTop: theme.spacing(2),
-     
+      marginTop: theme.spacing(2),     
     },
     title: {
         fontSize: 28,

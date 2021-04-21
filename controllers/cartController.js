@@ -25,15 +25,8 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  create: function (req, res) {
-    let createCart = new db({
-      product: req.params.product,
-      quantity: req.params.quantity,
-      totalPrice: req.params.totalPrice,
-      priceWithTax: req.params.priceWithTax,
-      status: req.params.status,
-    });
-    db.create(createCart)
+  create: function (req, res) {    
+    db.create(req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
@@ -44,7 +37,6 @@ module.exports = {
   },
   remove: function (req, res) {
     let removeProduct = new db({ id: req.params.id });
-    // console.log(removeProduct);
     db.findById({_id: removeProduct.id})
       .then((dbModel) => dbModel.remove())
       .then((dbModel) => res.json(dbModel))
@@ -91,7 +83,6 @@ module.exports = {
   //   db.findOneAndRemove(removeProduct)
   //     // .then((dbModel) => dbModel.remove())
   //     .then((dbModel) => {
-  //       console.log(res.json(dbModel)); // FOR TESTING
   //       res.json(dbModel);
   //     })
   //     .catch((err) => res.status(422).json(err));
